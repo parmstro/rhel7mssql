@@ -282,6 +282,23 @@ INSERT INTO testschema.items (ImageURL, Name) VALUES
 (N'https://www.randomlists.com/img/things/couch.jpg', N'couch');
 GO
 
+CREATE TABLE testschema.measure (
+  ID INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+  Quantity INT NOT NULL DEFAULT(1),
+  Name NVARCHAR(50) NOT NULL
+);
+GO
+
+INSERT INTO testschema.measure (Quantity, Name) VALUES
+(1, N'each'),
+(1, N'gross'),
+(1, N'case'),
+(1, N'kg'),
+(1, N'pair'),
+(1, N'gaggle (12)');
+GO
+
+
 CREATE TABLE testschema.employees (
   ID INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
   LocationID INT NOT NULL,
@@ -337,7 +354,7 @@ INSERT INTO testschema.customers (LocationID, Name) VALUES
 (48, N'MasterCard'), 
 (17, N'Audi'), 
 (9, N'McDonald''s'), 
-(59 N'Jack Daniel''s'), 
+(59, N'Jack Daniel''s'), 
 (8, N'Sony'), 
 (4, N'Louis Vuitton'), 
 (21, N'IKEA'), 
@@ -427,7 +444,7 @@ CREATE TABLE testschema.orderdetails (
   ID INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
   OrderID INT NOT NULL,
   Qty INT NOT NULL,
-  MeasureID NOT NULL,
+  MeasureID INT NOT NULL,
   Picked BIT NOT NULL DEFAULT(0)
 );
 GO
