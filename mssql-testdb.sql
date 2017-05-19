@@ -312,12 +312,12 @@ INSERT INTO testschema.employees (LocationID, Name) VALUES
 (1, N'Geeta Phogat'),
 (39, N'Thomas Hasler'),
 (17, N'John A. MacDonald'),
-(45, N'Chris Runge'),
+(44, N'Chris Runge'),
 (12, N'Michael Lessard'),
-(23, N'Anthony Green'),
-(20, N'Kim Li'),
-(63, N'Paul Pinkney'),
-(49, N'Jane Circle');
+(48, N'Anthony Green'),
+(2, N'Kim Li'),
+(59, N'Paul Pinkney'),
+(45, N'Jane Circle');
 GO
 
 CREATE TABLE testschema.customers (
