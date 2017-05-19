@@ -2,7 +2,9 @@
 A RHEL 7 based Microsoft SQL Server container build
 
 Dockerfile - this is the control file to generate the docker image for the mssql container.
+
 mssql-setup.sh - this is the script that gets copied into the container during build to install and configure mssql-server
+
 mssql-testdb.sh - this is the script that gets copied into the container during build to configure the testdb and schema and load some trivial data
 
 
