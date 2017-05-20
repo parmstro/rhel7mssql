@@ -544,7 +544,7 @@ BEGIN TRANSACTION
         BEGIN
           SET @ItemID = (SELECT id FROM testschema.items WHERE id = (SELECT FLOOR(RAND()*(@totalItems-1)+1)))
         END -- WHILE
-      SET @MeasureID = (SELECT measureid FROM testschema.items WHERE itemid = @ItemID)
+      SET @MeasureID = (SELECT measureid FROM testschema.items WHERE id = @ItemID)
       SET @Qty = (SELECT FLOOR(RAND()*(20-1)+1))
       INSERT INTO testschema.orderdetails (OrderID, Qty, MeasureID) VALUES
       (@OrderID, @Qty, @MeasureID)
