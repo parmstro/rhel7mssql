@@ -117,7 +117,13 @@ INSERT INTO testschema.measure (Quantity, Name) VALUES
 (1, N'lift (40 cases)'),
 (1, N'container (40 lifts)'),
 (1, N'ship (4000 containers)'),
-(1, N'openshift (40000000 containers)');
+(1, N'openshift (40000000 containers)'),
+(1, N'six-pack'),
+(1, N'half case'),
+(1, N'2-4, eh'),
+(1, N'case'),
+(1, N'keg'),
+(1, N'vat (Brewery 200HL)');
 GO
 
 CREATE TABLE testschema.items (
@@ -192,7 +198,7 @@ INSERT INTO testschema.items (MeasureID, ImageURL, Name) VALUES
 (1, N'https://www.randomlists.com/img/things/flag.jpg', N'flag'), 
 (1, N'https://www.randomlists.com/img/things/grid_paper.jpg', N'grid paper'), 
 (3, N'https://www.randomlists.com/img/things/soy_sauce_packet.jpg', N'soy sauce packet'), 
-(1, 'https://www.randomlists.com/img/things/ipod.jpg', N'ipod'), 
+(1, N'https://www.randomlists.com/img/things/ipod.jpg', N'ipod'), 
 (8, N'https://www.randomlists.com/img/things/eraser.jpg', N'eraser'), 
 (1, N'https://www.randomlists.com/img/things/toothpaste.jpg', N'toothpaste'), 
 (1, N'https://www.randomlists.com/img/things/clock.jpg', N'clock'), 
@@ -299,9 +305,9 @@ INSERT INTO testschema.items (MeasureID, ImageURL, Name) VALUES
 (5, N'https://www.randomlists.com/img/things/socks.jpg', N'socks'), 
 (2, N'https://www.randomlists.com/img/things/lip_gloss.jpg', N'lip gloss'), 
 (3, N'https://www.randomlists.com/img/things/tissue_box.jpg', N'tissue box'), 
-(1, 'https://www.randomlists.com/img/things/bow.jpg', N'bow'), 
-(1, 'https://www.randomlists.com/img/things/blouse.jpg', N'blouse'), 
-(1, 'https://www.randomlists.com/img/things/pen.jpg', N'pen'), 
+(1, N'https://www.randomlists.com/img/things/bow.jpg', N'bow'), 
+(1, N'https://www.randomlists.com/img/things/blouse.jpg', N'blouse'), 
+(1, N'https://www.randomlists.com/img/things/pen.jpg', N'pen'), 
 (5, N'https://www.randomlists.com/img/things/glasses.jpg', N'glasses'), 
 (8, N'https://www.randomlists.com/img/things/soda_can.jpg', N'soda can'), 
 (3, N'https://www.randomlists.com/img/things/screw.jpg', N'screw'), 
@@ -332,7 +338,14 @@ INSERT INTO testschema.items (MeasureID, ImageURL, Name) VALUES
 (19, N'https://www.randomlists.com/img/things/money.jpg', N'money'), 
 (1, N'https://www.randomlists.com/img/things/plate.jpg', N'plate'), 
 (1, N'https://www.randomlists.com/img/things/bag.jpg', N'bag'), 
-(1, N'https://www.randomlists.com/img/things/couch.jpg', N'couch');
+(1, N'https://www.randomlists.com/img/things/couch.jpg', N'couch'),
+(1, N'https://www.randomlists.com/img/things/bottle.jpg'; N'beer'),
+(25, N'https://www.randomlists.com/img/things/bottle.jpg'; N'beer'),
+(26, N'https://www.randomlists.com/img/things/bottle.jpg'; N'beer'),
+(27, N'https://www.randomlists.com/img/things/bottle.jpg'; N'beer'),
+(28, N'https://www.randomlists.com/img/things/bottle.jpg'; N'beer'),
+(29, N'https://www.randomlists.com/img/things/bottle.jpg'; N'beer'),
+(30, N'https://www.randomlists.com/img/things/bottle.jpg'; N'beer');
 GO
 
 
@@ -498,14 +511,15 @@ DECLARE @EmployeeID INT        -- the employee that made the order
 DECLARE @CustomerID INT        -- the customer that gets the order
 DECLARE @OrderID INT           -- the orderID for the items to be attached to
 DECLARE @ItemID INT            -- the itemID of the item to order
+DECLARE @MeasureID INT         -- the measurement units that the quantity of the order item is in.
 DECLARE @countItems INT        -- random number of items in the order
-DECLARE @count INT 	       -- an iterator
+DECLARE @counter INT 	       -- an iterator
 DECLARE @Qty INT					 -- the number of items of a given itemid to be ordered.
 
 -- Generate a random order of items for a random customer and assign it to a random employee
-SET @totalEmployees = SELECT COUNT(*) FROM testschema.employees
-SET @totalCustomers = SELECT COUNT(*) FROM testschema.customers
-SET @totalItems = SELECT COUNT(*) FROM testschema.items
+SET @totalEmployees = (SELECT COUNT(*) FROM testschema.employees)
+SET @totalCustomers = (SELECT COUNT(*) FROM testschema.customers)
+SET @totalItems = (SELECT COUNT(*) FROM testschema.items)
 
 WHILE (@EmployeeID IS NULL)
   BEGIN
@@ -521,10 +535,10 @@ SET @countItems = (SELECT FLOOR(RAND()*(20-1)+1))
 
 BEGIN TRANSACTION
   INSERT INTO testschema.orders (EmployeeID, CustomerID, DateOrdered) VALUES
-  (@EmployeeID, @CustomerID, Now())
+  (@EmployeeID, @CustomerID, GETDATE())
   SET @OrderID = @@ROWCOUNT
-  SET @count = 1
-  WHILE (@count <= @countItems)
+  SET @counter = 1
+  WHILE (@counter <= @countItems)
     BEGIN
       WHILE (@ItemID IS NULL)
         BEGIN
@@ -534,7 +548,7 @@ BEGIN TRANSACTION
       SET @Qty = (SELECT FLOOR(RAND()*(20-1)+1))
       INSERT INTO testschema.orderdetails (OrderID, Qty, MeasureID) VALUES
       (@OrderID, @Qty, @MeasureID)
-      SET @count = @count + 1
+      SET @counter = @counter + 1
     END -- WHILE
 COMMIT TRANSACTION
 
