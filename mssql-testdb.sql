@@ -554,6 +554,8 @@ BEGIN TRANSACTION
     END -- WHILE
 COMMIT TRANSACTION
 
+SELECT @OrderID AS OrderID
+
 END -- SPROC
 ;
 GO
@@ -565,6 +567,9 @@ CREATE PROCEDURE testschema.getOrderAndDetails (@OrderID INT)
 AS
 BEGIN
   SELECT
+    O.id AS OrderID,
+    E.id AS EmployeeID,
+    C.id AS CustomerID,
     E.name AS EmployeeName, 
     L.cityname AS EmployeeLocation,
     L.imageURL AS EmployeeMap, 
@@ -582,6 +587,7 @@ BEGIN
   WHERE O.id = @OrderID
 
   SELECT
+    I.id AS ItemID,
     OD.qty AS Qty,
     M.name As UnitOfMeasure,
     I.name AS ItemName, 
