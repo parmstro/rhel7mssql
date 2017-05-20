@@ -16,7 +16,7 @@
 
 FROM registry.access.redhat.com/rhel7:latest
 
-MAINTAINER Paul Armstrong version: 0.2
+MAINTAINER Paul Armstrong version: 0.3
 
 ADD ./mssql-setup.sh /tmp/mssql-setup.sh
 ADD ./mssql-testdb.sql /tmp/mssql-testdb.sql
