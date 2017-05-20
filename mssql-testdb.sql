@@ -339,13 +339,13 @@ INSERT INTO testschema.items (MeasureID, ImageURL, Name) VALUES
 (1, N'https://www.randomlists.com/img/things/plate.jpg', N'plate'), 
 (1, N'https://www.randomlists.com/img/things/bag.jpg', N'bag'), 
 (1, N'https://www.randomlists.com/img/things/couch.jpg', N'couch'),
-(1, N'https://www.randomlists.com/img/things/bottle.jpg'; N'beer'),
-(25, N'https://www.randomlists.com/img/things/bottle.jpg'; N'beer'),
-(26, N'https://www.randomlists.com/img/things/bottle.jpg'; N'beer'),
-(27, N'https://www.randomlists.com/img/things/bottle.jpg'; N'beer'),
-(28, N'https://www.randomlists.com/img/things/bottle.jpg'; N'beer'),
-(29, N'https://www.randomlists.com/img/things/bottle.jpg'; N'beer'),
-(30, N'https://www.randomlists.com/img/things/bottle.jpg'; N'beer');
+(1, N'https://www.randomlists.com/img/things/bottle.jpg', N'beer'),
+(25, N'https://www.randomlists.com/img/things/bottle.jpg', N'beer'),
+(26, N'https://www.randomlists.com/img/things/bottle.jpg', N'beer'),
+(27, N'https://www.randomlists.com/img/things/bottle.jpg', N'beer'),
+(28, N'https://www.randomlists.com/img/things/bottle.jpg', N'beer'),
+(29, N'https://www.randomlists.com/img/things/bottle.jpg', N'beer'),
+(30, N'https://www.randomlists.com/img/things/bottle.jpg', N'beer');
 GO
 
 
@@ -554,4 +554,7 @@ COMMIT TRANSACTION
 
 END -- SPROC
 ;
+GO
+
+EXEC testschema.generateOrder;
 GO
