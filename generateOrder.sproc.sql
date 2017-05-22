@@ -1,4 +1,4 @@
-Use testdb;
+USE testdb;
 GO
 
 IF EXISTS (SELECT * FROM sys.objects WHERE name = 'generateOrder' AND type = 'P') 
