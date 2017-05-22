@@ -1,4 +1,4 @@
-IF EXISTS (SELECT COUNT(*) FROM sys.objects WHERE name = 'getOrderAndDetails' AND type = 'P') 
+IF EXISTS (SELECT * FROM sys.objects WHERE name = 'getOrderAndDetails' AND type = 'P') 
 BEGIN 
 	DROP PROCEDURE testschema.getOrderAndDetails
 END;
