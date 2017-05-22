@@ -1,3 +1,6 @@
+USE testdb;
+GO
+
 IF EXISTS (SELECT * FROM sys.objects WHERE name = 'getOrderAndDetails' AND type = 'P') 
 BEGIN 
 	DROP PROCEDURE testschema.getOrderAndDetails

@@ -4,7 +4,7 @@
 CREATE DATABASE testdb;
 GO
 
-Use testdb;
+USE testdb;
 GO
 
 CREATE SCHEMA testschema;
