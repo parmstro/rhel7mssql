@@ -8,9 +8,12 @@ CREATE PROCEDURE testschema.generateOrder
 AS
 BEGIN
 
-DECLARE @totalEmployees INT    -- the total number of employees
-DECLARE @totalCustomers INT    -- the total number of customers
-DECLARE @totalItems INT        -- the total number of items
+DECLARE @maxEmployees INT    -- the highest id number from employees
+DECLARE @maxCustomers INT    -- the highest id number from customers
+DECLARE @maxItems INT        -- the highest id number from items
+DECLARE @minEmployees INT    -- the lowest id number from employees
+DECLARE @minCustomers INT    -- the lowest id number from customers
+DECLARE @minItems INT        -- the lowest id number from items
 
 DECLARE @EmployeeID INT        -- the employee that made the order
 DECLARE @CustomerID INT        -- the customer that gets the order
@@ -22,18 +25,21 @@ DECLARE @counter INT 	       -- an iterator
 DECLARE @Qty INT					 -- the number of items of a given itemid to be ordered.
 
 -- Generate a random order of items for a random customer and assign it to a random employee
-SET @totalEmployees = (SELECT COUNT(*) FROM testschema.employees)
-SET @totalCustomers = (SELECT COUNT(*) FROM testschema.customers)
-SET @totalItems = (SELECT COUNT(*) FROM testschema.items)
+SET @maxEmployees = (SELECT MAX(id) FROM testschema.employees)
+SET @maxCustomers = (SELECT MAX(id) FROM testschema.customers)
+SET @maxItems = (SELECT MAX(id) FROM testschema.items)
+SET @minEmployees = (SELECT MIN(id) FROM testschema.employees)
+SET @minCustomers = (SELECT MIN(id) FROM testschema.customers)
+SET @minItems = (SELECT MIN(id) FROM testschema.items)
 
 WHILE (@EmployeeID IS NULL)
   BEGIN
-    SET @EmployeeID = (SELECT id FROM testschema.employees WHERE id = (SELECT FLOOR(RAND()*(@totalEmployees-1)+1)))
+    SET @EmployeeID = (SELECT id FROM testschema.employees WHERE id = (SELECT FLOOR(RAND()*(@maxEmployees-@minEmployees)+1)))
   END
 
 WHILE (@CustomerID IS NULL)
   BEGIN
-    SET @CustomerID = (SELECT id FROM customers WHERE id = (SELECT FLOOR(RAND()*(@totalCustomers-1)+1)))
+    SET @CustomerID = (SELECT id FROM customers WHERE id = (SELECT FLOOR(RAND()*(@maxCustomers-@minCustomers)+1)))
   END
 
 SET @countItems = (SELECT FLOOR(RAND()*(20-1)+1))
@@ -47,7 +53,7 @@ BEGIN TRANSACTION
     BEGIN
       WHILE (@ItemID IS NULL)
         BEGIN
-          SET @ItemID = (SELECT id FROM testschema.items WHERE id = (SELECT FLOOR(RAND()*(@totalItems-1)+1)))
+          SET @ItemID = (SELECT id FROM testschema.items WHERE id = (SELECT FLOOR(RAND()*(@maxItems-@minItems)+1)))
         END -- WHILE
       SET @MeasureID = (SELECT measureid FROM testschema.items WHERE id = @ItemID)
       SET @Qty = (SELECT FLOOR(RAND()*(20-1)+1))
