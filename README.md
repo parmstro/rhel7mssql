@@ -34,14 +34,17 @@ The output should look something like:
 
 6) now you can query the database...
 
-```sudo curl https://packages.microsoft.com/config/rhel/7/prod.repo > /etc/yum.repos.d/mssql-tools.repo
+```
+sudo curl https://packages.microsoft.com/config/rhel/7/prod.repo > /etc/yum.repos.d/mssql-tools.repo
 sudo ACCEPT_EULA=Y yum install mssql-tools
 echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bash_profile
 echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
-/opt/mssql-tools/bin/sqlcmd -S 172.17.0.2 -U sa -P RedHat2017 -Q "USE testdb; EXEC getOrderAndDetails 1"```
+/opt/mssql-tools/bin/sqlcmd -S 172.17.0.2 -U sa -P RedHat2017 -Q "USE testdb; EXEC getOrderAndDetails 1"
+```
 
 
-## Sample Data gets loaded into testdb by default as well as a couple of stored procedures to generate orders and get a the data for particular order number.
+
+Sample Data gets loaded into testdb by default as well as a couple of stored procedures to generate orders and get a the data for particular order number.
 
 ### To add a new order to the environment with random data, run:
 ```/opt/mssql-tools/bin/sqlcmd -S 172.17.0.2 -U sa -P RedHat2017 -d testdb "EXEC generateOrder"```
