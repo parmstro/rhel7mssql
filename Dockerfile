@@ -21,7 +21,7 @@ LABEL release-date="2017-05-22"
 COPY ./mssql-setup.sh /tmp/mssql-setup.sh
 COPY ./mssql-testdb.sql /tmp/mssql-testdb.sql
 COPY ./generateOrder.sproc.sql /tmp/generateOrder.sproc.sql
-COPY ./getOrderAndDetails.sql /tmp/getOrderAndDetails.sproc.sql
+COPY ./getOrderAndDetails.sproc.sql /tmp/getOrderAndDetails.sproc.sql
 RUN yum repolist --disablerepo=* && \
     yum-config-manager --disable \* > /dev/null && \
     yum-config-manager --enable rhel-7-server-rpms > /dev/null && \
