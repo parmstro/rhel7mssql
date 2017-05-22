@@ -1,27 +1,27 @@
 # A very rudimentary mssql-server service
 #
-# This is intended to have the client run remotely. # 
-#
+# This is intended to have the client run remotely. 
 # docker build -t="mssql-server-14" .
 #
 # Launch the server
-#
 # docker run -d mssql-server-14
 #
 # Find the IP of the server
-#
 # MYSQL_IP=`docker inspect CONTAINER_ID | python -c 'import json,sys;obj=json.load(sys.stdin);print obj[0]["NetworkSettings"]["IPAddress"]'`
 #
+# Run the container image
 # docker run -i -t mssql-server-14 mysql -u admin -p -h $MYSQL_IP
 
 FROM registry.access.redhat.com/rhel7:latest
 
-MAINTAINER Paul Armstrong version: 0.3
+LABEL maintainedby="Paul Armstrong" 
+LABEL version="0.4"
+LABEL release-date="2017-05-22"
 
-ADD ./mssql-setup.sh /tmp/mssql-setup.sh
-ADD ./mssql-testdb.sql /tmp/mssql-testdb.sql
-ADD ./generateOrder.sproc.sql /tmp/generateOrder.sproc.sql
-ADD ./getOrdersAndDetails.sql /tmp/getOrdersAndDetails.sproc.sql
+COPY ./mssql-setup.sh /tmp/mssql-setup.sh
+COPY ./mssql-testdb.sql /tmp/mssql-testdb.sql
+COPY ./generateOrder.sproc.sql /tmp/generateOrder.sproc.sql
+COPY ./getOrdersAndDetails.sql /tmp/getOrderAndDetails.sproc.sql
 RUN yum repolist --disablerepo=* && \
     yum-config-manager --disable \* > /dev/null && \
     yum-config-manager --enable rhel-7-server-rpms > /dev/null && \
