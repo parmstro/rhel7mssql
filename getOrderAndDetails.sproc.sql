@@ -1,4 +1,7 @@
-DROP PROCEDURE testschema.getOrderAndDetails
+IF EXISTS (SELECT COUNT(*) FROM sys.objects WHERE name = 'getOrderAndDetails' AND type = 'P') 
+BEGIN 
+	DROP PROCEDURE testschema.getOrderAndDetails
+END;
 GO
 
 CREATE PROCEDURE testschema.getOrderAndDetails (@OrderID INT)

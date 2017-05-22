@@ -1,4 +1,7 @@
-DROP PROCEDURE testschema.generateOrder
+IF EXISTS (SELECT COUNT(*) FROM sys.objects WHERE name = 'generateOrder' AND type = 'P') 
+BEGIN 
+	DROP PROCEDURE testschema.generateOrder
+END;
 GO
 
 CREATE PROCEDURE testschema.generateOrder 
@@ -59,3 +62,7 @@ SELECT @OrderID AS OrderID
 
 END -- SPROC
 ;
+GO
+
+EXEC testschema.generateOrder;
+GO

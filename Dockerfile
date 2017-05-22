@@ -20,6 +20,8 @@ MAINTAINER Paul Armstrong version: 0.3
 
 ADD ./mssql-setup.sh /tmp/mssql-setup.sh
 ADD ./mssql-testdb.sql /tmp/mssql-testdb.sql
+ADD ./generateOrder.sproc.sql /tmp/generateOrder.sproc.sql
+ADD ./getOrdersAndDetails.sql /tmp/getOrdersAndDetails.sproc.sql
 RUN yum repolist --disablerepo=* && \
     yum-config-manager --disable \* > /dev/null && \
     yum-config-manager --enable rhel-7-server-rpms > /dev/null && \

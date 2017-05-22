@@ -39,22 +39,14 @@ sudo ACCEPT_EULA=Y yum install mssql-tools
 echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bash_profile
 echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
 
-/opt/mssql-tools/bin/sqlcmd -S 172.17.0.2 -U sa -P RedHat2017 -Q "USE testdb; SELECT * FROM testschema.employees"
+/opt/mssql-tools/bin/sqlcmd -S 172.17.0.2 -U sa -P RedHat2017 -Q "USE testdb; EXEC getOrderAndDetails 1"
 
-You output should look something like:
+Sample Data gets loaded into testdb by default as well as a couple of stored procedures to generate orders and get a the data for particular order number.
 
-Changed database context to 'testdb'.
-ID          Name                                               Location                                          
------------ -------------------------------------------------- --------------------------------------------------
-          1 Jared Tallent                                      Australia                                         
-          2 Nikita Khrushchev                                  Russia                                            
-          3 Geeta Phogat                                       India                                             
-          4 Thomas Hasler                                      Germany                                           
-          5 John A. MacDonald                                  Canada                                            
+To add a new order to the environment with random data, run:
+/opt/mssql-tools/bin/sqlcmd -S 172.17.0.2 -U sa -P RedHat2017 -d testdb "EXEC generateOrder"
+This will return the orderid.
 
-(5 rows affected)
-
-
-
-
+To view a given order, run
+/opt/mssql-tools/bin/sqlcmd -S 172.17.0.2 -U sa -P RedHat2017 -d testdb "EXEC getOrderAndDetails <OrderID/>"
 

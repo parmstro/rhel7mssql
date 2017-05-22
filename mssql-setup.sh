@@ -18,3 +18,5 @@ echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
 /opt/mssql/bin/sqlservr &
 # now we can connect and set up some junk data.
 /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P $SA_PASSWORD -i /tmp/mssql-testdb.sql
+/opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P $SA_PASSWORD -i /tmp/generateOrder.sproc.sql
+/opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P $SA_PASSWORD -i /tmp/getOrdersAndDetails.sproc.sql
